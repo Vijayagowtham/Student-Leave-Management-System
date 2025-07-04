@@ -38,6 +38,7 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
+            
             // Here you can add your login logic, e.g., sending data to a server
             console.log('Username:', username);
             console.log('Password:', password);
@@ -54,11 +55,11 @@
                 const data = await response.json();
                 console.log('Login successful:', data);
                 if(data.role === 'tutor'){
-                    window.location.href = '/tutorwelcome.html';
+                    window.location.href = 'tutorwelcome.html';
                 } 
 
                 else if(data.role === 'user'){
-                    window.location.href = '/ser.html';
+                    window.location.href = 'ser.html';
                 }
                 
             } else {
