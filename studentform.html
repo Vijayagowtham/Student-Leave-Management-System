@@ -1,73 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Leave Application</title>
-  <link rel="stylesheet" href="student.css" />
+  <meta charset="UTF-8">
+  <title>Student Leave Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #a6c0fe, #f68084);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    ul.bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      margin: 0; padding: 0;
+      overflow: hidden;
+      list-style: none;
+    }
+
+    ul.bubbles li {
+      position: absolute;
+      display: block;
+      width: 40px; height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      bottom: -120px;
+      animation: rise 20s infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
+    }
+
+    ul.bubbles li:nth-child(1) { left: 10%; animation-duration: 20s; }
+    ul.bubbles li:nth-child(2) { left: 20%; animation-duration: 15s; }
+    ul.bubbles li:nth-child(3) { left: 25%; animation-duration: 18s; }
+    ul.bubbles li:nth-child(4) { left: 40%; animation-duration: 22s; }
+    ul.bubbles li:nth-child(5) { left: 55%; animation-duration: 17s; }
+    ul.bubbles li:nth-child(6) { left: 65%; animation-duration: 25s; }
+    ul.bubbles li:nth-child(7) { left: 70%; animation-duration: 19s; }
+    ul.bubbles li:nth-child(8) { left: 80%; animation-duration: 23s; }
+    ul.bubbles li:nth-child(9) { left: 90%; animation-duration: 16s; }
+    ul.bubbles li:nth-child(10) { left: 95%; animation-duration: 21s; }
+
+    .form-container {
+      max-width: 800px;
+      width: 100%;
+      background: #ffffffee;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      background: #6a1b9a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #4a148c;
+      transform: scale(1.02);
+    }
+
+    .success-page {
+      display: none;
+      background: #ffffffee;
+      border-radius: 20px;
+      padding: 60px 40px;
+      text-align: center;
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .success-page h1 {
+      color: green;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      .form-container, .success-page {
+        padding: 25px;
+      }
+
+      button {
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Floating bubbles animation -->
+  <!-- Bubbles -->
   <ul class="bubbles">
     <li></li><li></li><li></li><li></li><li></li>
     <li></li><li></li><li></li><li></li><li></li>
   </ul>
 
-  <!-- Success Message -->
-  <div id="successPage" class="success-page">
-    <h1>✅ Application Submitted Successfully!</h1>
-    <p>Your leave request has been recorded.</p>
-  </div>
-
-  <!-- Leave Form -->
-  <div class="form-container" id="formContainer">
-    <h2>🎓 Student Leave Application Form</h2>
-    <form id="leaveForm">
-      <!-- Student Details -->
-      <fieldset>
-        <legend>Student Details</legend>
-        <label>Student Name:</label>
-        <input type="text" id="name" required />
-        <label>Roll Number:</label>
-        <input type="text" id="rollno" required />
-        <label>Course:</label>
-        <input type="text" id="course" required />
-        <label>Branch:</label>
-        <input type="text" id="branch" required />
-        <label>Section:</label>
-        <input type="text" id="section" required />
-      </fieldset>
-
-      <!-- Leave Details -->
-      <fieldset>
-        <legend>Leave Details</legend>
-        <label>From Date:</label>
-        <input type="date" id="from" required />
-        <label>To Date:</label>
-        <input type="date" id="to" required />
-        <label>Total Number of Days:</label>
-        <input type="number" id="days" readonly />
-        <label>Reason:</label>
-        <textarea id="reason" rows="3" required></textarea>
-      </fieldset>
-
-      <!-- Parent/Guardian Details -->
-      <fieldset>
-        <legend>Parent/Guardian Details</legend>
-        <label>Parent/Guardian Name:</label>
-        <input type="text" id="parentName" required />
-        <label>Relationship:</label>
-        <input type="text" id="relation" required />
-        <label>Phone Number:</label>
-        <input type="tel" id="phone" pattern="[0-9]{10}" required />
-      </fieldset>
-
-      <button type="submit">Submit Application</button>
+  <!-- Form Section -->
+  <div class="form-container" id="formSection">
+    <h2>Student Leave Form</h2>
+    <form onsubmit="event.preventDefault(); submitForm();">
+      <label>Student Name:
+        <input type="text" id="studentName" required>
+      </label>
+      <label>Roll Number:
+        <input type="text" id="rollNumber" required>
+      </label>
+      <label>Course:
+        <input type="text" id="course" required>
+      </label>
+      <label>Branch:
+        <input type="text" id="branch" required>
+      </label>
+      <label>Section:
+        <input type="text" id="section" required>
+      </label>
+      <label>From Date:
+        <input type="text" id="fromDate" required>
+      </label>
+      <label>To Date:
+        <input type="text" id="toDate" required>
+      </label>
+      <label>Total Days:
+        <input type="number" id="totalDays" readonly required>
+      </label>
+      <label>Reason:
+        <textarea id="reason" required></textarea>
+      </label>
+      <label>Parent Name:
+        <input type="text" id="parentName" required>
+      </label>
+      <label>Relationship:
+        <input type="text" id="relationship" required>
+      </label>
+      <label>Phone Number:
+        <input type="text" id="phone" required>
+      </label>
+      <button type="submit">Submit Leave Request</button>
     </form>
   </div>
+
+  <!-- Success Page -->
+  <div class="success-page" id="successPage">
+    <h1>Leave Request Submitted!</h1>
+    <p>Your form has been successfully submitted.</p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    
+    flatpickr("#fromDate", {
+      dateFormat: "Y-m-d",
+      onChange: calculateDays
+    });
+    flatpickr("#toDate", {
+      dateFormat: "Y-m-d",
+      onChange: calculateDays
+    });
+
+    function calculateDays() {
+      const from = document.getElementById("fromDate").value;
+      const to = document.getElementById("toDate").value;
+      if (from && to) {
+        const date1 = new Date(from);
+        const date2 = new Date(to);
+        const diff = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24)) + 1;
+        document.getElementById("totalDays").value = diff > 0 ? diff : 0;
+      }
+    }
+
+    function submitForm() {
+      const data = {
+        studentName: document.getElementById('studentName').value,
+        rollNumber: document.getElementById('rollNumber').value,
+        course: document.getElementById('course').value,
+        branch: document.getElementById('branch').value,
+        section: document.getElementById('section').value,
+        fromDate: document.getElementById('fromDate').value,
+        toDate: document.getElementById('toDate').value,
+        totalDays: document.getElementById('totalDays').value,
+        reason: document.getElementById('reason').value,
+        parentName: document.getElementById('parentName').value,
+        relationship: document.getElementById('relationship').value,
+        phone: document.getElementById('phone').value,
+        status: "PENDING"
+      };
+
+      fetch("http://localhost:8080/leaveform/ins", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById('formSection').style.display = "none";
+          document.getElementById('successPage').style.display = "block";
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      })
+      .catch(err => alert("Error: " + err));
+    }
   </script>
-  
 </body>
 </html>
