@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutor Dashboard</title>
     <link rel="stylesheet" href="tutor.css">
+    <link rel="stylesheet" href="studentform.html">
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
             <h2>Tutor Panel</h2>
             <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Leave Requests</a></li>
+                <li><p>Dashboard</p></li>
+                <li><a href="tutorpendingreq.html">Leave Requests</a></li>
                 <li><a href="#">Approved Leaves</a></li>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">History</a></li>
@@ -29,7 +30,7 @@
             <section class="content">
                 <h2>Pending Leave Requests</h2>
                 <div class="card">
-                    <p><strong>Student:</strong> Vijay</p>
+                    <p id="stu"><strong></strong></p>
                     <p><strong>Student Mobile Number: </strong>454684678</p>
                     <p><strong>Parent Mobile Number: </strong>4561134695</p>
                     <p><strong> From Date:</strong> 05 July 2025</p>
@@ -46,5 +47,9 @@
             </section>
         </main>
     </div>
+    <script>
+        let name=localStorage.getItem("us");
+        document.getElementById("stu").innerText="student name" + name;
+    </script>
 </body>
 </html>
