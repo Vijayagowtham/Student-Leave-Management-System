@@ -5,77 +5,70 @@
   <title>Student Leave Form</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, #a6c0fe, #f68084);
-      overflow-x: hidden;
-      min-height: 100vh;
+      background: linear-gradient(135deg, #2193b0, #6dd5ed);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      padding: 50px 20px;
-      position: relative;
+      align-items: center;
+      overflow: auto;
     }
 
-    ul.bubbles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-      margin: 0; padding: 0;
-      overflow: hidden;
-      list-style: none;
-    }
-
-    ul.bubbles li {
-      position: absolute;
-      display: block;
-      width: 40px; height: 40px;
-      background: rgba(255, 255, 255, 0.2);
-      bottom: -120px;
-      animation: rise 20s infinite;
-      border-radius: 50%;
-    }
-
-    @keyframes rise {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-      100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
-    }
-
-    ul.bubbles li:nth-child(1) { left: 10%; animation-duration: 20s; }
-    ul.bubbles li:nth-child(2) { left: 20%; animation-duration: 15s; }
-    ul.bubbles li:nth-child(3) { left: 25%; animation-duration: 18s; }
-    ul.bubbles li:nth-child(4) { left: 40%; animation-duration: 22s; }
-    ul.bubbles li:nth-child(5) { left: 55%; animation-duration: 17s; }
-    ul.bubbles li:nth-child(6) { left: 65%; animation-duration: 25s; }
-    ul.bubbles li:nth-child(7) { left: 70%; animation-duration: 19s; }
-    ul.bubbles li:nth-child(8) { left: 80%; animation-duration: 23s; }
-    ul.bubbles li:nth-child(9) { left: 90%; animation-duration: 16s; }
-    ul.bubbles li:nth-child(10) { left: 95%; animation-duration: 21s; }
-
-    .form-container {
-      max-width: 800px;
+    .form-container, .success-page {
+      background: #ffffff;
       width: 100%;
-      background: #ffffffee;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 800px;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      height: auto;
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .flatpickr-calendar {
+      z-index: 9999 !important;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1976d2;
+      margin-bottom: 15px;
     }
 
     label {
       display: block;
       margin-top: 12px;
       font-weight: 600;
+      color: #333;
     }
 
     input, textarea {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      font-size: 16px;
+      padding: 8px 10px;
+      font-size: 15px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    .field-pair {
+      display: flex;
+      gap: 15px;
+      margin-top: 12px;
+    }
+
+    .field-pair label {
+      flex: 1;
+      margin-top: 0;
     }
 
     textarea {
@@ -84,102 +77,121 @@
 
     button {
       width: 100%;
-      padding: 14px;
-      font-size: 18px;
-      background: #6a1b9a;
-      color: #fff;
+      padding: 12px;
+      font-size: 16px;
+      background: #1976d2;
+      color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       margin-top: 20px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s ease, transform 0.2s;
     }
 
     button:hover {
-      background: #4a148c;
+      background: #0d47a1;
       transform: scale(1.02);
     }
 
     .success-page {
       display: none;
-      background: #ffffffee;
-      border-radius: 20px;
-      padding: 60px 40px;
       text-align: center;
-      max-width: 600px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 0.5s ease-in-out;
     }
 
     .success-page h1 {
       color: green;
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: 10px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .details-card {
+      background: #e3f2fd;
+      border: 1px solid #90caf9;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .details-card h3 {
+      margin-bottom: 10px;
+      color: #1976d2;
+    }
+
+    .details-card p {
+      margin: 6px 0;
+      font-size: 15px;
     }
 
     @media (max-width: 600px) {
-      .form-container, .success-page {
-        padding: 25px;
+      .field-pair {
+        flex-direction: column;
       }
 
-      button {
-        font-size: 16px;
+      .form-container, .success-page {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Bubbles -->
-  <ul class="bubbles">
-    <li></li><li></li><li></li><li></li><li></li>
-    <li></li><li></li><li></li><li></li><li></li>
-  </ul>
 
-  <!-- Form Section -->
+  <!-- Form Container -->
   <div class="form-container" id="formSection">
     <h2>Student Leave Form</h2>
     <form onsubmit="event.preventDefault(); submitForm();">
+
       <label>Student Name:
         <input type="text" id="studentName" required>
       </label>
+
       <label>Roll Number:
         <input type="text" id="rollNumber" required>
       </label>
-      <label>Course:
-        <input type="text" id="course" required>
-      </label>
-      <label>Branch:
-        <input type="text" id="branch" required>
-      </label>
-      <label>Section:
-        <input type="text" id="section" required>
-      </label>
+
+      <div class="field-pair">
+        <label>Course:
+          <input type="text" id="course" required>
+        </label>
+        <label>Branch:
+          <input type="text" id="branch" required>
+        </label>
+      </div>
+
+      <div class="field-pair">
+        <label>Section:
+          <input type="text" id="section" required>
+        </label>
+        <label>Total Days:
+          <input type="number" id="totalDays" readonly required>
+        </label>
+      </div>
+
       <label>From Date:
         <input type="text" id="fromDate" required>
       </label>
+
       <label>To Date:
         <input type="text" id="toDate" required>
       </label>
-      <label>Total Days:
-        <input type="number" id="totalDays" readonly required>
-      </label>
+
       <label>Reason:
-        <textarea id="reason" required></textarea>
+        <textarea id="reason" rows="3" required></textarea>
       </label>
-      <label>Parent Name:
-        <input type="text" id="parentName" required>
-      </label>
-      <label>Relationship:
-        <input type="text" id="relationship" required>
-      </label>
+
+      <div class="field-pair">
+        <label>Parent Name:
+          <input type="text" id="parentName" required>
+        </label>
+        <label>Relationship:
+          <input type="text" id="relationship" required>
+        </label>
+      </div>
+
       <label>Phone Number:
         <input type="text" id="phone" required>
       </label>
+
       <button type="submit">Submit Leave Request</button>
     </form>
   </div>
@@ -188,6 +200,22 @@
   <div class="success-page" id="successPage">
     <h1>Leave Request Submitted!</h1>
     <p>Your form has been successfully submitted.</p>
+
+    <div class="details-card" id="submittedDetails">
+      <h3>Submitted Details:</h3>
+      <p><strong>Student Name:</strong> <span id="dName"></span></p>
+      <p><strong>Roll Number:</strong> <span id="dRoll"></span></p>
+      <p><strong>Course:</strong> <span id="dCourse"></span></p>
+      <p><strong>Branch:</strong> <span id="dBranch"></span></p>
+      <p><strong>Section:</strong> <span id="dSection"></span></p>
+      <p><strong>From Date:</strong> <span id="dFrom"></span></p>
+      <p><strong>To Date:</strong> <span id="dTo"></span></p>
+      <p><strong>Total Days:</strong> <span id="dDays"></span></p>
+      <p><strong>Reason:</strong> <span id="dReason"></span></p>
+      <p><strong>Parent Name:</strong> <span id="dParent"></span></p>
+      <p><strong>Relationship:</strong> <span id="dRelation"></span></p>
+      <p><strong>Phone:</strong> <span id="dPhone"></span></p>
+    </div>
   </div>
 
   <!-- Scripts -->
@@ -195,11 +223,14 @@
   <script>
     flatpickr("#fromDate", {
       dateFormat: "Y-m-d",
-      onChange: calculateDays
+      onChange: calculateDays,
+      appendTo: document.querySelector(".form-container")
     });
+
     flatpickr("#toDate", {
       dateFormat: "Y-m-d",
-      onChange: calculateDays
+      onChange: calculateDays,
+      appendTo: document.querySelector(".form-container")
     });
 
     function calculateDays() {
@@ -230,21 +261,29 @@
         status: "PENDING"
       };
 
-      fetch("http://localhost:8080/leaveform/ins", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.ok) {
-          document.getElementById('formSection').style.display = "none";
-          document.getElementById('successPage').style.display = "block";
-        } else {
-          alert("Submission failed. Please try again.");
-        }
-      })
-      .catch(err => alert("Error: " + err));
+      // Show success page
+      document.getElementById('formSection').style.display = "none";
+      document.getElementById('successPage').style.display = "block";
+
+      // Populate details
+      document.getElementById("dName").textContent = data.studentName;
+      document.getElementById("dRoll").textContent = data.rollNumber;
+      document.getElementById("dCourse").textContent = data.course;
+      document.getElementById("dBranch").textContent = data.branch;
+      document.getElementById("dSection").textContent = data.section;
+      document.getElementById("dFrom").textContent = data.fromDate;
+      document.getElementById("dTo").textContent = data.toDate;
+      document.getElementById("dDays").textContent = data.totalDays;
+      document.getElementById("dReason").textContent = data.reason;
+      document.getElementById("dParent").textContent = data.parentName;
+      document.getElementById("dRelation").textContent = data.relationship;
+      document.getElementById("dPhone").textContent = data.phone;
+
+      // Send to backend (uncomment when ready)
+      // fetch("http://localhost:8080/leaveform/ins", {
+      //   method: "POST",
+      //   headers
     }
-  </script>
-</body>
-</html>
+    </script>
+    </body>
+    </html>
