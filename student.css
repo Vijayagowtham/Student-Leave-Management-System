@@ -8,7 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 50px 20px;
+  padding: 20px 20px;
   position: relative;
 }
 
@@ -28,7 +28,7 @@ ul.bubbles li {
   position: absolute;
   display: block;
   width: 40px;
-  height: 40px;
+  height: 20px;
   background: rgba(255, 255, 255, 0.2);
   bottom: -120px;
   animation: rise 20s infinite;
@@ -59,8 +59,8 @@ ul.bubbles li:nth-child(10) { left: 95%; animation-duration: 21s; }
 
 /* Form Card */
 .form-container {
-  max-width: 800px;
-  width: 100%;
+  max-width: 8px;
+  width: 10%;
   background: #ffffffee;
   border-radius: 20px;
   padding: 40px;

@@ -61,7 +61,9 @@
                 else if(data.role === 'student'){
                     window.location.href = 'studentform.html';
                 }
-                
+                else if(data.role=== 'admin'){
+                  window.location.href ='admin.html';
+                }
             } else {
                 alert('Login failed:', response.statusText);
                 // Show error message to the user

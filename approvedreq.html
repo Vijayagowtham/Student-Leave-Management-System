@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Approved Leave Requests</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>Approved Leave Requests</h2>
+  <table id="approvedTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Roll Number</th>
+        <th>Course</th>
+        <th>Branch</th>
+        <th>Section</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Days</th>
+        <th>Reason</th>
+        <th>Parent</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody id="approvedBody">
+      <!-- Approved rows will show here -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch('http://localhost:8080/leaveform/approved')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById('approvedBody');
+        data.forEach(req => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${req.id}</td>
+            <td>${req.studentName}</td>
+            <td>${req.rollNumber}</td>
+            <td>${req.course}</td>
+            <td>${req.branch}</td>
+            <td>${req.section}</td>
+            <td>${req.fromDate}</td>
+            <td>${req.toDate}</td>
+            <td>${req.totalDays}</td>
+            <td>${req.reason}</td>
+            <td>${req.parentName} (${req.relationship})</td>
+            <td>${req.phone}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error loading approved requests:', error));
+  </script>
+</body>
+</html>
