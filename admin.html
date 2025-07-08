@@ -1,239 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HOD Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>Admin Dashboard</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background: #2590dc;
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      display: flex;
-      background: url('https://www.transparenttextures.com/patterns/geometry.png'), linear-gradient(135deg, #e0eafc, #cfdef3);
-      min-height: 100vh;
-      background-blend-mode: overlay;
+      padding: 20px;
     }
 
-    .sidebar {
-      width: 240px;
-      background: url('https://www.transparenttextures.com/patterns/cubes.png'), linear-gradient(135deg, #2c3e50, #4ca1af);
-      background-blend-mode: overlay;
-      color: white;
-      height: 100vh;
-      padding-top: 20px;
-      transition: all 0.3s ease;
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .sidebar h4 {
+    h1 {
       text-align: center;
       margin-bottom: 30px;
-      font-size: 1.8em;
-      letter-spacing: 1px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
 
-    .sidebar ul {
-      list-style-type: none;
-      padding: 0;
+    form {
+      margin-bottom: 30px;
     }
 
-    .sidebar ul li {
-      padding: 15px 20px;
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-      border-radius: 8px;
-      margin: 5px 10px;
+      transition: background 0.3s ease;
     }
 
-    .sidebar ul li:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      transform: translateX(5px);
+    button:hover {
+      background-color: #0056b3;
     }
 
-    .main {
-      flex: 1;
-      padding: 30px;
-      transition: all 0.3s ease;
-    }
-
-    .hidden {
-      display: none;
+    .table-section {
+      margin-top: 20px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-top: 15px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
     }
 
     th, td {
-      padding: 12px 16px;
+      padding: 12px;
       text-align: left;
     }
 
     th {
-      background-color: #ecf0f1;
-      font-weight: bold;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    input[type="text"], input[type="email"] {
-      padding: 10px;
-      width: calc(100% - 20px);
-      margin: 5px 0 15px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      padding: 8px 16px;
-      background-color: #2980b9;
+      background-color: #007bff;
       color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin: 2px;
-    }
-
-    button:hover {
-      background-color: #3498db;
-    }
-
-    h2, h3 {
-      color: #2c3e50;
-    }
-
-    h4 {
-      color: #f5f8fa;
     }
   </style>
 </head>
-
 <body>
-  <div class="sidebar">
-    <h4>HOD Panel</h4>
-    <ul>
-      <li onclick="showSection('leaveSection')">📄 Leave Forms</li>
-      <li onclick="showSection('tutorSection')">👨‍🏫 Tutor Details</li>
-    </ul>
-  </div>
+  <div class="container">
+    <h1>Welcome, Admin</h1>
 
-  <div class="main">
-    <div id="leaveSection">
-      <h2>Student Leave Forms</h2>
-      <input type="text" id="studentSearch" placeholder="Search by student name or year" onkeyup="filterLeaves()">
-      <table id="leaveTable">
-        <thead>
-          <tr><th>Name</th><th>Year</th><th>Tutor</th><th>Reason</th><th>Date</th><th>Verified Status</th><th>Actions</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John Doe</td><td>3</td><td>Dr. Kumar</td><td>Medical</td><td>2025-07-01</td><td id="verify1">Not Verified</td>
-            <td>
-              <button onclick="verifyLeave('verify1', true)">✔ Accept</button>
-              <button onclick="verifyLeave('verify1', false)">❌ Reject</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Jane Smith</td><td>2</td><td>Ms. Meena</td><td>Family function</td><td>2025-07-02</td><td id="verify2">Not Verified</td>
-            <td>
-              <button onclick="verifyLeave('verify2', true)">✔ Accept</button>
-              <button onclick="verifyLeave('verify2', false)">❌ Reject</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Add New Department -->
+    <div class="section">
+      <h2>Add Department</h2>
+      <form id="addDepartmentForm">
+        <label for="deptName">Department Name:</label>
+        <input type="text" id="deptName" name="deptName" required>
+        <button type="submit">Add Department</button>
+      </form>
     </div>
 
-    <div id="tutorSection" class="hidden">
-      <h2>Tutor Details</h2>
-      <input type="text" id="tutorSearch" placeholder="Search by tutor name" onkeyup="filterTutors()">
-      <table id="tutorTable">
+    <!-- Add/Edit HOD -->
+    <div class="section">
+      <h2>Assign or Update HOD</h2>
+      <form id="assignHodForm">
+        <label for="selectDept">Select Department:</label>
+        <select id="selectDept" name="selectDept" required>
+          <!-- Dynamic Options Loaded Here -->
+        </select>
+
+        <label for="hodName">HOD Name:</label>
+        <input type="text" id="hodName" name="hodName" required>
+
+        <label for="hodEmail">HOD Email:</label>
+        <input type="email" id="hodEmail" name="hodEmail" required>
+
+        <button type="submit">Save HOD</button>
+      </form>
+    </div>
+
+    <!-- Departments + HODs Table -->
+    <div class="table-section">
+      <h2>Departments & HODs</h2>
+      <table id="deptTable">
         <thead>
-          <tr><th>Name</th><th>Department</th><th>Phone</th><th>Email</th></tr>
+          <tr>
+            <th>Department</th>
+            <th>HOD Name</th>
+            <th>Email</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>Dr. Kumar</td><td>CSE</td><td>9876543210</td><td>kumar@college.edu</td></tr>
-          <tr><td>Ms. Meena</td><td>ECE</td><td>9123456780</td><td>meena@college.edu</td></tr>
+          <!-- Dynamically Filled -->
         </tbody>
       </table>
-
-      <h3>Add New Tutor</h3>
-      <input type="text" id="newName" placeholder="Name">
-      <input type="text" id="newDept" placeholder="Department">
-      <input type="text" id="newPhone" placeholder="Phone">
-      <input type="email" id="newEmail" placeholder="Email">
-      <button onclick="addTutor()">➕ Add Tutor</button>
     </div>
   </div>
 
   <script>
-    function showSection(sectionId) {
-      document.querySelectorAll('.main > div').forEach(div => div.classList.add('hidden'));
-      document.getElementById(sectionId).classList.remove('hidden');
-    }
+    const deptList = [];
 
-    function filterLeaves() {
-      const input = document.getElementById('studentSearch').value.toLowerCase();
-      const rows = document.querySelectorAll('#leaveTable tbody tr');
-      rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(input) ? '' : 'none';
-      });
-    }
-
-    function verifyLeave(cellId, accepted) {
-      const cell = document.getElementById(cellId);
-      if (cell) {
-        cell.innerText = accepted ? 'Verified - Accepted' : 'Verified - Rejected';
-        cell.style.color = accepted ? 'green' : 'red';
-      }
-    }
-
-    function filterTutors() {
-      const input = document.getElementById('tutorSearch').value.toLowerCase();
-      const rows = document.querySelectorAll('#tutorTable tbody tr');
-      rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(input) ? '' : 'none';
-      });
-    }
-
-    function addTutor() {
-      const name = document.getElementById('newName').value.trim();
-      const dept = document.getElementById('newDept').value.trim();
-      const phone = document.getElementById('newPhone').value.trim();
-      const email = document.getElementById('newEmail').value.trim();
-
-      if (name && dept && phone && email) {
-        const table = document.querySelector('#tutorTable tbody');
-        const row = table.insertRow();
-        row.innerHTML = `<td>${name}</td><td>${dept}</td><td>${phone}</td><td>${email}</td>`;
-        document.getElementById('newName').value = "";
-        document.getElementById('newDept').value = "";
-        document.getElementById('newPhone').value = "";
-        document.getElementById('newEmail').value = "";
-        alert('New tutor added successfully!');
+    document.getElementById("addDepartmentForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const deptName = document.getElementById("deptName").value.trim();
+      if (deptName && !deptList.find(d => d.name === deptName)) {
+        deptList.push({ name: deptName, hod: null });
+        updateDeptSelect();
+        updateTable();
+        document.getElementById("addDepartmentForm").reset();
       } else {
-        alert("Please fill all fields to add a tutor.");
+        alert("Department already exists or invalid input.");
       }
+    });
+
+    document.getElementById("assignHodForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const selectedDept = document.getElementById("selectDept").value;
+      const hodName = document.getElementById("hodName").value;
+      const hodEmail = document.getElementById("hodEmail").value;
+
+      const dept = deptList.find(d => d.name === selectedDept);
+      if (dept) {
+        dept.hod = { name: hodName, email: hodEmail };
+        updateTable();
+        document.getElementById("assignHodForm").reset();
+      }
+    });
+
+    function updateDeptSelect() {
+      const select = document.getElementById("selectDept");
+      select.innerHTML = "";
+      deptList.forEach(dept => {
+        const option = document.createElement("option");
+        option.value = dept.name;
+        option.textContent = dept.name;
+        select.appendChild(option);
+      });
     }
 
-    showSection('leaveSection');
+    function updateTable() {
+      const tbody = document.querySelector("#deptTable tbody");
+      tbody.innerHTML = "";
+      deptList.forEach(dept => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${dept.name}</td>
+          <td>${dept.hod ? dept.hod.name : "Not Assigned"}</td>
+          <td>${dept.hod ? dept.hod.email : "Not Assigned"}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
   </script>
 </body>
-
 </html>
