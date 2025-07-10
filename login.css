@@ -3,14 +3,14 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  height: 100vh;
+  height: 95vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(-45deg, #78c2f3, #4275af, #2bafd0, #3f51b5);
-  background-size: 400% 400%;
-  animation: backgroundShift 15s ease infinite;
+  background-image: url("loginimage.jpg");
+  background-size: 100% 100%;
+  animation: backgroundShift 0 ease infinite;
 }
 
 @keyframes backgroundShift {

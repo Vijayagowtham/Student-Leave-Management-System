@@ -1,0 +1,43 @@
+<form id="tutorForm">
+  <label>Name:</label>
+  <input type="text" name="name" required><br>
+
+  <label>Username:</label>
+  <input type="text" name="username" required><br>
+
+  <label>Password:</label>
+  <input type="password" name="password" required><br>
+
+  <label>Department:</label>
+  <input type="text" name="department" required><br>
+
+  <input type="hidden" name="role" value="tutor">
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("tutorForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+
+  fetch("http://localhost:8080/tutors/add", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => {
+    if (res.ok) {
+      alert("Tutor added successfully!");
+      window.location.href = "success.html"; // Optional
+    } else {
+      alert("Failed to add tutor.");
+    }
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("Server error.");
+  });
+});
+</script>

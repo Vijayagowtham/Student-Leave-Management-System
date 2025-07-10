@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HOD Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1b1b9a;
+      color: white;
+    }
+
+    button {
+      padding: 6px 12px;
+      background-color: #3452ea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    button:hover {
+      background-color: #1631ca;
+    }
+
+    input, select {
+      padding: 10px;
+      margin-top: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <h1>HOD Dashboard</h1>
+
+  <div class="container">
+    <!-- Add Tutor Section -->
+    <div class="section">
+      <h2>Add Tutor</h2>
+      <form id="addTutorForm">
+        <label>Tutor Name</label>
+        <input type="text" name="name" required />
+        <label>Email</label>
+        <input type="email" name="email" required />
+        <label>Department</label>
+        <input type="text" name="department" required />
+        <label for="number">Phone</label>
+        <button type="submit">Add Tutor</button>
+      </form>
+    </div>
+
+    <!-- Tutor List -->
+    <div class="section">
+      <h2>My Department Tutors</h2>
+      <table id="tutorTable">
+        <thead>
+          <tr>
+            <th>Name</th><th>Email</th><th>Department</th><th>Phone</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Leave Requests -->
+    <div class="section">
+      <h2>Tutor Forwarded Leave Requests</h2>
+      <table id="leaveTable">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Roll No</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const department = "CSE"; // Assume HOD logged in from CSE dept
+
+    // Add Tutor
+    document.getElementById("addTutorForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const data = Object.fromEntries(form.entries());
+
+      await fetch("http://localhost:8080/api/tutor/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      alert("Tutor added successfully");
+      e.target.reset();
+      loadTutors();
+    });
+
+    // Load Tutors from same department
+    async function loadTutors() {
+      const res = await fetch(`http://localhost:8080/api/tutor/by-department/${department}`);
+      const tutors = await res.json();
+      const tbody = document.querySelector("#tutorTable tbody");
+      tbody.innerHTML = tutors.map(t => `
+        <tr><td>${t.name}</td><td>${t.email}</td><td>${t.department}</td></tr>
+      `).join("");
+    }
+
+    // Load Leave Requests forwarded by tutors
+    async function loadLeaves() {
+      const res = await fetch("http://localhost:8080/leaveform/get");
+      const leaves = await res.json();
+      const forwarded = leaves.filter(l => l.status === "FORWARDED_TO_HOD");
+      const tbody = document.querySelector("#leaveTable tbody");
+
+      tbody.innerHTML = forwarded.map(l => `
+        <tr>
+          <td>${l.studentName}</td>
+          <td>${l.rollNumber}</td>
+          <td>${l.reason}</td>
+          <td>${l.status}</td>
+          <td>
+            <button onclick="handleAction(${l.id}, 'approve')">Approve</button>
+            <button onclick="handleAction(${l.id}, 'reject')">Reject</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    // Accept/Reject Leave Request
+    async function handleAction(id, action) {
+      await fetch(`http://localhost:8080/leaveform/upd/${id}?action=${action}`, { method: "PUT" });
+      alert(`Leave ${action}d`);
+      loadLeaves();
+
+      if (action === "approve") {
+        // Optional: Send email logic here (call backend email API)
+      }
+    }
+
+    loadTutors();
+    loadLeaves();
+  </script>
+</body>
+</html>

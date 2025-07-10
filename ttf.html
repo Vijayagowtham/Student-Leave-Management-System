@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Leave Application</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: #333;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    .header {
+      background: linear-gradient(135deg, #36d1dc, #5b86e5);
+      padding: 15px; /* ✅ Reduced padding */
+      text-align: center;
+      color: white;
+      border-radius: 0 0 12px 12px; /* ✅ Compact rounded edges */
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      font-size: 1.5rem; /* ✅ Smaller title */
+      margin: 0;
+    }
+
+    .header p {
+      font-size: 0.85rem; /* ✅ Smaller subtitle */
+      margin-top: 4px;
+    }
+
+    .form-container {
+      background: #fff;
+      max-width: 600px; /* ✅ Compact width */
+      margin: 20px auto;
+      padding: 20px; /* ✅ Reduced padding */
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem; /* ✅ Smaller section title */
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .form-container h2 i {
+      color: #007bff;
+      margin-right: 8px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px; /* ✅ Reduced gap */
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 3px; /* ✅ Tighter spacing */
+      font-size: 0.85rem; /* ✅ Smaller label font */
+    }
+
+    input, select, textarea {
+      padding: 7px; /* ✅ Compact input fields */
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9rem; /* ✅ Smaller input text */
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 12px; /* ✅ Tighter spacing */
+      width: 100%;
+      padding: 10px; /* ✅ Smaller button */
+      background: linear-gradient(135deg, #36d1dc, #5b86e5);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #5b86e5, #36d1dc);
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      margin-top: 12px; /* ✅ Tighter spacing */
+      color: green;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    /* ✅ Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .form-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1><i class="fas fa-graduation-cap"></i> Student Leave Application</h1>
+    <p>Fill in all details to submit your leave request</p>
+  </div>
+
+  <div class="form-container">
+    <h2><i class="fas fa-user"></i> Student Information</h2>
+    <form id="leaveForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="studentName">Student Name *</label>
+          <input type="text" id="studentName" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="rollNumber">Roll Number *</label>
+          <input type="text" id="rollNumber" placeholder="Enter your roll number" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="course">Course *</label>
+          <select id="course" required>
+            <option value="">Select Your Course</option>
+            <option value="B.Tech">B.Tech</option>
+            <option value="B.E">B.E</option>
+            <option value="M.Tech">M.Tech</option>
+            <option value="MBA">MBA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="branch">Branch/Specialization *</label>
+          <select id="branch" required>
+            <option value="">Select Your Branch</option>
+            <option value="CSE">Computer Science</option>
+            <option value="ECE">Electronics & Communication</option>
+            <option value="EEE">Electrical & Electronics</option>
+            <option value="MECH">Mechanical</option>
+            <option value="CIVIL">Civil</option>
+            <option value="IT">Information Technology</option>
+            <option value="AI_DS">Artificial Intelligence & Data Science</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="section">Section *</label>
+          <select id="section" required>
+            <option value="">Select Section</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="parentName">Parent/Guardian Name *</label>
+          <input type="text" id="parentName" placeholder="Enter parent or guardian's name" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="parentMobile">Parent/Guardian Mobile Number *</label>
+          <input type="tel" id="parentMobile" placeholder="Enter mobile number" required>
+        </div>
+        <div class="form-group">
+          <label for="reason">Reason for Leave *</label>
+          <textarea id="reason" rows="2" placeholder="Enter reason for leave" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fromDate">From Date *</label>
+          <input type="date" id="fromDate" required>
+        </div>
+        <div class="form-group">
+          <label for="toDate">To Date *</label>
+          <input type="date" id="toDate" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="totalDays">Number of Days *</label>
+          <input type="number" id="totalDays" readonly>
+        </div>
+      </div>
+
+      <button type="submit">Submit Leave Request</button>
+    </form>
+    <div class="success-message" id="successMessage">✅ Your leave request was successfully submitted!</div>
+  </div>
+
+  <script>
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const totalDays = document.getElementById('totalDays');
+    
+    function calculateDays() {
+      const start = new Date(fromDate.value);
+      const end = new Date(toDate.value);
+      if (fromDate.value && toDate.value && end >= start) {
+        const diffTime = end - start;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        totalDays.value = diffDays;
+      } else {
+        totalDays.value = '';
+      }
+    }
+
+    fromDate.addEventListener('change', calculateDays);
+    toDate.addEventListener('change', calculateDays);
+
+    document.getElementById('leaveForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('successMessage').style.display = 'block';
+      this.reset();
+      totalDays.value = '';
+    });
+  </script>
+</body>
+</html>

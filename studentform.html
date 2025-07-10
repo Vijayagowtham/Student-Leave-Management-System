@@ -11,7 +11,11 @@
       height: 100%;
       overflow: hidden; /* No scrolling */
       font-family: Arial, sans-serif;
-      background: #2f89d2;
+      background-image:url('student.png');
+      
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
     }
 
     .form-container {
@@ -69,6 +73,7 @@
     .form-container button:hover {
       background-color: #218838;
     }
+    
 
     #successMessage {
       text-align: center;
@@ -79,6 +84,7 @@
   </style>
 </head>
 <body>
+  
 
   <div class="form-container" id="formSection">
     <h2>Student Leave Form</h2>
@@ -115,11 +121,11 @@
       </div>
 
       <div class="form-row">
-        <label>Relationship:
+        <label>studentphonenumber:
           <input type="text" name="relationship" required>
         </label>
 
-        <label>Phone Number:
+        <label>ParentPhone Number:
           <input type="text" name="phone" required>
         </label>
       </div>
@@ -146,47 +152,55 @@
 
     <p id="successMessage">✅ Your form has been submitted successfully!</p>
   </div>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script>
-    flatpickr("#fromDate", { dateFormat: "Y-m-d", onChange: calculateDays });
-    flatpickr("#toDate", { dateFormat: "Y-m-d", onChange: calculateDays });
+<script>
+  flatpickr("#fromDate", { dateFormat: "Y-m-d", onChange: calculateDays });
+  flatpickr("#toDate", { dateFormat: "Y-m-d", onChange: calculateDays });
 
-    function calculateDays() {
-      const from = document.getElementById("fromDate").value;
-      const to = document.getElementById("toDate").value;
-      if (from && to) {
-        const start = new Date(from);
-        const end = new Date(to);
-        const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
-        document.getElementById("totalDays").value = days > 0 ? days : 0;
-      }
+  function calculateDays() {
+    const from = document.getElementById("fromDate").value;
+    const to = document.getElementById("toDate").value;
+    if (from && to) {
+      const start = new Date(from);
+      const end = new Date(to);
+      const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+      document.getElementById("totalDays").value = days > 0 ? days : 0;
+    }
+  }
+
+  document.getElementById("leaveForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const days = parseInt(document.getElementById("totalDays").value);
+    if (days === 0) {
+      alert("Leave days cannot be zero!");
+      return;
     }
 
-    document.getElementById("leaveForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+    data.status = "PENDING";
 
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
-      data.status = "PENDING";
-
-      fetch("http://localhost:8080/leaveform/ins", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(res => {
-        if (res.ok) {
-          window.location.href = "succes.html";
-        } else {
-          alert("Failed to submit request.");
-        }
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        alert("Server error while submitting.");
-      });
+    fetch("http://localhost:8080/leaveform/ins", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      if (res.ok) {
+        window.location.href = "succes.html";
+      } else {
+        alert("Failed to submit request.");
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      alert("Server error while submitting.");
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
