@@ -11,17 +11,26 @@
       height: 100%;
       overflow: hidden; /* No scrolling */
       font-family: Arial, sans-serif;
-      background-image:url('student.png');
-      
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+      background-image: url('studentform.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    header {
+      text-align: center;
+      padding: 15px;
+      background-color: rgba(19, 169, 223, 0.8);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
     .form-container {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 550px;
+      margin: 30px auto;
+      padding: 15px;
       background: #ffffff;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -30,27 +39,28 @@
 
     .form-container h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      font-size: 20px;
     }
 
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 15px;
     }
 
     .form-container label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       font-weight: bold;
     }
 
     .form-container input, 
     .form-container textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border: 1px solid #ccc;
+      padding: 6px;
+      margin-top: 3px;
+      border: 1px solid #0db6bf;
       border-radius: 4px;
       box-sizing: border-box;
     }
@@ -61,9 +71,9 @@
 
     .form-container button {
       width: 100%;
-      padding: 10px;
-      background-color: #1a41b8;
-      color: white;
+      padding: 8px;
+      background-color: #2396c3;
+      color: rgb(255, 255, 255);
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -73,7 +83,6 @@
     .form-container button:hover {
       background-color: #218838;
     }
-    
 
     #successMessage {
       text-align: center;
@@ -84,10 +93,11 @@
   </style>
 </head>
 <body>
-  
+
+  <header>Student Leave Form 📄</header>
 
   <div class="form-container" id="formSection">
-    <h2>Student Leave Form</h2>
+    <h2>Fill in Your Details</h2>
     <form id="leaveForm">
 
       <div class="form-row">
@@ -121,11 +131,11 @@
       </div>
 
       <div class="form-row">
-        <label>studentphonenumber:
+        <label>Student Phone Number:
           <input type="text" name="relationship" required>
         </label>
 
-        <label>ParentPhone Number:
+        <label>Parent Phone Number:
           <input type="text" name="phone" required>
         </label>
       </div>
@@ -152,55 +162,53 @@
 
     <p id="successMessage">✅ Your form has been submitted successfully!</p>
   </div>
-  
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-  flatpickr("#fromDate", { dateFormat: "Y-m-d", onChange: calculateDays });
-  flatpickr("#toDate", { dateFormat: "Y-m-d", onChange: calculateDays });
+  <script>
+    flatpickr("#fromDate", { dateFormat: "Y-m-d", onChange: calculateDays });
+    flatpickr("#toDate", { dateFormat: "Y-m-d", onChange: calculateDays });
 
-  function calculateDays() {
-    const from = document.getElementById("fromDate").value;
-    const to = document.getElementById("toDate").value;
-    if (from && to) {
-      const start = new Date(from);
-      const end = new Date(to);
-      const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
-      document.getElementById("totalDays").value = days > 0 ? days : 0;
-    }
-  }
-
-  document.getElementById("leaveForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const days = parseInt(document.getElementById("totalDays").value);
-    if (days === 0) {
-      alert("Leave days cannot be zero!");
-      return;
-    }
-
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData.entries());
-    data.status = "PENDING";
-
-    fetch("http://localhost:8080/leaveform/ins", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    })
-    .then(res => {
-      if (res.ok) {
-        window.location.href = "succes.html";
-      } else {
-        alert("Failed to submit request.");
+    function calculateDays() {
+      const from = document.getElementById("fromDate").value;
+      const to = document.getElementById("toDate").value;
+      if (from && to) {
+        const start = new Date(from);
+        const end = new Date(to);
+        const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+        document.getElementById("totalDays").value = days > 0 ? days : 0;
       }
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      alert("Server error while submitting.");
+    }
+
+    document.getElementById("leaveForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const days = parseInt(document.getElementById("totalDays").value);
+      if (days === 0) {
+        alert("Leave days cannot be zero!");
+        return;
+      }
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      data.status = "PENDING";
+
+      fetch("http://localhost:8080/leaveform/ins", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (res.ok) {
+          window.location.href = "succes.html";
+        } else {
+          alert("Failed to submit request.");
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("Server error while submitting.");
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
-</html>
