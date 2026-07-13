@@ -59,8 +59,8 @@ ul.bubbles li:nth-child(10) { left: 95%; animation-duration: 21s; }
 
 /* Form Card */
 .form-container {
-  max-width: 8px;
-  width: 10%;
+  max-width: 500px;
+  width: 90%;
   background: #ffffffee;
   border-radius: 20px;
   padding: 40px;

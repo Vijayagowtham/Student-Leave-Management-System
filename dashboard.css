@@ -1,0 +1,124 @@
+/* unified layout and responsive styles for all dashboards */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    display: flex;
+}
+
+/* Base overlay for better readability on backgrounds */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    /* defaults can be overridden inline if needed, but lets set a decent default */
+    background-color: rgba(44, 62, 80, 0.95);
+    color: #fff;
+    padding: 30px 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a,
+.sidebar ul li p {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar ul li a i,
+.sidebar ul li p i {
+    margin-right: 8px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active p {
+    background-color: #27ae60;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex: 1;
+    padding: 60px;
+    color: #ffffff;
+}
+
+.main-content header h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.main-content p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    /* Flex scroll for many menu items */
+    .sidebar ul {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+    }
+
+    .sidebar ul li {
+        margin: 0 10px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+}

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Student Leave Form</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden; /* No scrolling */
+      min-height: 100%;
       font-family: Arial, sans-serif;
       background-image: url('studentform.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
+      background-attachment: fixed;
     }
 
     header {
@@ -33,7 +35,7 @@
       padding: 15px;
       background: #ffffff;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
     }
 
@@ -55,7 +57,7 @@
       font-weight: bold;
     }
 
-    .form-container input, 
+    .form-container input,
     .form-container textarea {
       width: 100%;
       padding: 6px;
@@ -92,6 +94,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>Student Leave Form 📄</header>
@@ -197,17 +200,17 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
-      .then(res => {
-        if (res.ok) {
-          window.location.href = "succes.html";
-        } else {
-          alert("Failed to submit request.");
-        }
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        alert("Server error while submitting.");
-      });
+        .then(res => {
+          if (res.ok) {
+            window.location.href = "succes.html";
+          } else {
+            alert("Failed to submit request.");
+          }
+        })
+        .catch(err => {
+          console.error("Error:", err);
+          alert("Server error while submitting.");
+        });
     });
   </script>
 

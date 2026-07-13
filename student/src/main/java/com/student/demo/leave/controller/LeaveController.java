@@ -1,9 +1,6 @@
 package com.student.demo.leave.controller;
 
-
-
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,16 +39,41 @@ public class LeaveController {
     public String delete(@PathVariable Long id) {
         return service.deleteLeave(id);
     }
- // Get only approved requests
+
+    // Get only approved requests
     @GetMapping("/approved")
     public List<LeaveRequest> getApproved() {
         return service.getByStatus("APPROVED_BY_TUTOR");
     }
 
-
     // Get only pending requests (for tutor)
     @GetMapping("/pending")
     public List<LeaveRequest> getPending() {
         return service.getByStatus("PENDING");
+    }
+
+    @GetMapping("/forwarded")
+    public List<LeaveRequest> getForwarded() {
+        return service.getByStatus("FORWARDED_TO_HOD");
+    }
+
+    @PutMapping("/forwardtohod")
+    public void forwardAllToHod() {
+        service.forwardAllToHod();
+    }
+
+    @GetMapping("/rejected")
+    public List<LeaveRequest> getRejected() {
+        return service.getByStatus("REJECTED");
+    }
+
+    @GetMapping("/approved-by-hod")
+    public List<LeaveRequest> getApprovedByHod() {
+        return service.getByStatus("APPROVED_BY_HOD");
+    }
+
+    @GetMapping("/search")
+    public List<LeaveRequest> getByRollNumber(@RequestParam String rollNumber) {
+        return service.getByRollNumber(rollNumber);
     }
 }

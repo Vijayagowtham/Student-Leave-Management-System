@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>HOD Leave Requests</title>
   <style>
     body {
-       font-family: 'Segoe UI', sans-serif;
-    background-image: url('studentform.jpg');
-    background-repeat: repeat;
-    background-size: auto, cover;
-    padding: 40px;
-    margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('studentform.jpg');
+      background-repeat: repeat;
+      background-size: auto, cover;
+      padding: 40px;
+      margin: 0;
     }
+
     h2 {
       color: #2c3e50;
     }
+
     .card {
       background-color: #fff;
       border: 1px solid #ddd;
       padding: 15px;
       margin-bottom: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    .card p, .card input, .card textarea {
+
+    .card p,
+    .card input,
+    .card textarea {
       margin: 5px 0;
       display: block;
       width: 50%;
     }
-    input, textarea {
+
+    input,
+    textarea {
       padding: 6px;
       font-size: 14px;
     }
+
     .btn-group {
       margin-top: 10px;
     }
+
     .btn {
       padding: 8px 12px;
       margin-right: 10px;
@@ -43,11 +53,21 @@
       cursor: pointer;
       color: white;
     }
-    .approve { background-color: green; }
-    .reject { background-color: red; }
-    .edit { background-color: blue; }
+
+    .approve {
+      background-color: green;
+    }
+
+    .reject {
+      background-color: red;
+    }
+
+    .edit {
+      background-color: blue;
+    }
   </style>
 </head>
+
 <body>
 
   <h2>Forwarded Leave Requests (HOD Dashboard)</h2>
@@ -103,17 +123,17 @@
     }
 
     function updateStatus(id, action) {
-      fetch(`${baseApi}hodform/hod/upd/${id}?action=${action}`, {
+      fetch(`${baseApi}leaveform/upd/${id}?action=${action}`, {
         method: "PUT"
       })
-      .then(res => {
-        if (res.ok) {
-          alert(`Request ${action.toUpperCase()}ED!`);
-          fetchForwardedRequests();
-        } else {
-          alert("Failed to update request.");
-        }
-      });
+        .then(res => {
+          if (res.ok) {
+            alert(`Request ${action.toUpperCase()}ED!`);
+            fetchForwardedRequests();
+          } else {
+            alert("Failed to update request.");
+          }
+        });
     }
 
     function editRequest(id) {
@@ -126,17 +146,17 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fromDate, toDate, reason })
       })
-      .then(res => {
-        if (res.ok) {
-          alert("Request updated.");
-          fetchForwardedRequests();
-        } else {
-          alert("Edit failed.");
-        }
-      })
-      .catch(err => {
-        console.error("Error editing request:", err);
-      });
+        .then(res => {
+          if (res.ok) {
+            alert("Request updated.");
+            fetchForwardedRequests();
+          } else {
+            alert("Edit failed.");
+          }
+        })
+        .catch(err => {
+          console.error("Error editing request:", err);
+        });
     }
 
     // Initial load
@@ -144,4 +164,5 @@
   </script>
 
 </body>
+
 </html>

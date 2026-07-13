@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Add HOD</title>
@@ -11,8 +12,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .form-container {
@@ -29,7 +32,8 @@
       color: #2c3e50;
     }
 
-    input, button {
+    input,
+    button {
       padding: 12px;
       width: 100%;
       margin: 10px 0;
@@ -56,6 +60,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="form-container">
@@ -81,20 +86,21 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
-      .then(response => {
-        if (response.ok) {
-          alert("HOD added successfully!");
-          this.reset();
-        } else {
-          alert("Failed to add HOD.");
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert("Server error.");
-      });
+        .then(response => {
+          if (response.ok) {
+            alert("HOD added successfully!");
+            this.reset();
+          } else {
+            alert("Failed to add HOD.");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Server error.");
+        });
     });
   </script>
 
 </body>
+
 </html>

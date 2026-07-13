@@ -1,7 +1,5 @@
 package com.student.demo.leave.service;
 
-
-
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +42,14 @@ public class LeaveRequestService {
         return repo.findAll();
     }
 
+    public void forwardAllToHod() {
+        List<LeaveRequest> list = repo.findByStatus("APPROVED_BY_TUTOR");
+        for (LeaveRequest req : list) {
+            req.setStatus("FORWARDED_TO_HOD");
+        }
+        repo.saveAll(list);
+    }
+
     public String deleteLeave(Long id) {
         repo.deleteById(id);
         return "Deleted";
@@ -52,5 +58,8 @@ public class LeaveRequestService {
     public List<LeaveRequest> getByStatus(String status) {
         return repo.findByStatus(status);
     }
-}
 
+    public List<LeaveRequest> getByRollNumber(String rollNumber) {
+        return repo.findByRollNumber(rollNumber);
+    }
+}
