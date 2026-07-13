@@ -29,6 +29,7 @@
       background-color: #f1f1f1;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -47,7 +48,7 @@
   </table>
 
   <script>
-    fetch("http://localhost:8080/hodform/viewhod")
+    fetch(`${CONFIG.API_BASE_URL}/hodform/viewhod`)
       .then(res => res.json())
       .then(data => {
         const tbody = document.querySelector("#hodTable tbody");

@@ -66,6 +66,7 @@
       background-color: blue;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 
 <body>
@@ -74,7 +75,7 @@
   <div id="hodRequestsContainer"></div>
 
   <script>
-    const baseApi = "http://localhost:8080/";
+    const baseApi = `${CONFIG.API_BASE_URL}/`;
 
     function fetchForwardedRequests() {
       fetch(`${baseApi}leaveform/forwarded`)

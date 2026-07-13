@@ -35,6 +35,12 @@ public class StudentController {
     @Autowired
     private HodRepository hodRepo;
 
+    @Autowired
+    private com.student.demo.security.JwtUtil jwtUtil;
+
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
     // A common login API
     @PostMapping("/leaveform")
     public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginData) {
@@ -43,25 +49,36 @@ public class StudentController {
 
         // Check tutor login
         Optional<Tutor1> tutor = tutorRepo.findByUsername(username);
-        if (tutor.isPresent() && tutor.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(Map.of("role", tutor.get().getRole()));
+        // Note: For existing legacy users, we might check equals(password) OR
+        // passwordEncoder.matches(password, getPassword())
+        // Here we simulate migrating to BCrypt securely by checking both as fallback
+        if (tutor.isPresent() && (tutor.get().getPassword().equals(password)
+                || passwordEncoder.matches(password, tutor.get().getPassword()))) {
+            String token = jwtUtil.generateToken(username, tutor.get().getRole());
+            return ResponseEntity.ok(Map.of("role", tutor.get().getRole(), "token", token));
         }
 
         // Check student login
         Optional<Student> student = studentRepo.findByUsername(username);
-        if (student.isPresent() && student.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(Map.of("role", student.get().getRole()));
+        if (student.isPresent() && (student.get().getPassword().equals(password)
+                || passwordEncoder.matches(password, student.get().getPassword()))) {
+            String token = jwtUtil.generateToken(username, student.get().getRole());
+            return ResponseEntity.ok(Map.of("role", student.get().getRole(), "token", token));
         }
 
         Optional<Admin> admin = adminrepo.findByUsername(username);
-        if (admin.isPresent() && admin.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(Map.of("role", admin.get().getRole()));
+        if (admin.isPresent() && (admin.get().getPassword().equals(password)
+                || passwordEncoder.matches(password, admin.get().getPassword()))) {
+            String token = jwtUtil.generateToken(username, admin.get().getRole());
+            return ResponseEntity.ok(Map.of("role", admin.get().getRole(), "token", token));
         }
 
         // Check HOD login
         Optional<Hod> hod = hodRepo.findByUsername(username);
-        if (hod.isPresent() && hod.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(Map.of("role", hod.get().getRole()));
+        if (hod.isPresent() && (hod.get().getPassword().equals(password)
+                || passwordEncoder.matches(password, hod.get().getPassword()))) {
+            String token = jwtUtil.generateToken(username, hod.get().getRole());
+            return ResponseEntity.ok(Map.of("role", hod.get().getRole(), "token", token));
         }
 
         // Invalid credentials
@@ -72,6 +89,9 @@ public class StudentController {
     @PostMapping("/students/add")
     public ResponseEntity<String> addStudent(@RequestBody Student student) {
         student.setRole("student");
+        if (student.getPassword() != null) {
+            student.setPassword(passwordEncoder.encode(student.getPassword()));
+        }
         studentRepo.save(student);
         return ResponseEntity.ok("Student added successfully");
     }
@@ -85,6 +105,9 @@ public class StudentController {
     @PostMapping("/tutor/add")
     public ResponseEntity<String> addTutor(@RequestBody Tutor1 tutor) {
         tutor.setRole("tutor");
+        if (tutor.getPassword() != null) {
+            tutor.setPassword(passwordEncoder.encode(tutor.getPassword()));
+        }
         tutorRepo.save(tutor);
         return ResponseEntity.ok("Tutor added successfully");
     }

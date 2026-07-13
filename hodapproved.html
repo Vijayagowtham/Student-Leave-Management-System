@@ -21,6 +21,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -28,7 +29,7 @@
   <div id="approvedContainer"></div>
 
   <script>
-    const baseApi = "http://localhost:8080/leaveform";
+    const baseApi = `${CONFIG.API_BASE_URL}/leaveform`;
 
     function fetchApprovedByHod() {
       fetch(`${baseApi}/approved-by-hod`) // Make sure this endpoint exists

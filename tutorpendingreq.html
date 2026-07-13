@@ -44,6 +44,7 @@
     .reject { background-color: red; }
     .forward { background-color: orange; }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 <!-- Add this inside <body> before or after the heading -->
@@ -53,7 +54,7 @@
   <div id="leaveRequestsContainer"></div>
 
   <script>
-  const apiBase = "http://localhost:8080/leaveform";
+  const apiBase = `${CONFIG.API_BASE_URL}/leaveform`;
 
   // Fetch all pending leave requests
   function fetchRequests() {

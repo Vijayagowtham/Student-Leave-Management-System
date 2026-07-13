@@ -27,6 +27,7 @@
       margin: 5px 0;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -34,7 +35,7 @@
   <div id="rejectedRequestsContainer"></div>
 
   <script>
-    const apiBase = "http://localhost:8080/leaveform";
+    const apiBase = `${CONFIG.API_BASE_URL}/leaveform`;
 
     function fetchRejected() {
       const container = document.getElementById("rejectedRequestsContainer");

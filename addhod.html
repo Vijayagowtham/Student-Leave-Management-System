@@ -59,6 +59,7 @@
       background-color: #1f618d;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 
 <body>
@@ -81,7 +82,7 @@
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
 
-      fetch("http://localhost:8080/hodform/addhod", {
+      fetch(`${CONFIG.API_BASE_URL}/hodform/addhod`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

@@ -69,6 +69,7 @@
       box-sizing: border-box;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
   <h1>HOD Dashboard</h1>
@@ -129,7 +130,7 @@
       const form = new FormData(e.target);
       const data = Object.fromEntries(form.entries());
 
-      await fetch("http://localhost:8080/api/tutor/add", {
+      await fetch(`${CONFIG.API_BASE_URL}/api/tutor/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -151,7 +152,7 @@
 
     // Load Leave Requests forwarded by tutors
     async function loadLeaves() {
-      const res = await fetch("http://localhost:8080/leaveform/get");
+      const res = await fetch(`${CONFIG.API_BASE_URL}/leaveform/get`);
       const leaves = await res.json();
       const forwarded = leaves.filter(l => l.status === "FORWARDED_TO_HOD");
       const tbody = document.querySelector("#leaveTable tbody");

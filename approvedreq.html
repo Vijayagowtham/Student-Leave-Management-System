@@ -48,6 +48,7 @@
       color: aliceblue;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 
 <body>
@@ -80,7 +81,7 @@
   </table>
   <script>
     // Load approved leave requests (only those not forwarded to HOD)
-    fetch('http://localhost:8080/leaveform/approved')
+    fetch(`${CONFIG.API_BASE_URL}/leaveform/approved`)
       .then(response => response.json())
       .then(data => {
         const tbody = document.getElementById('approvedBody');
@@ -108,7 +109,7 @@
       })
       .catch(error => console.error('Error loading approved requests:', error));
     function forwardToHod() {
-      fetch('http://localhost:8080/leaveform/forwardtohod', {
+      fetch(`${CONFIG.API_BASE_URL}/leaveform/forwardtohod`, {
         method: 'PUT'
       })
         .then(response => {

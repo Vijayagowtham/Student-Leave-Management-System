@@ -93,6 +93,7 @@
       display: none;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 
 <body>
@@ -195,7 +196,7 @@
       const data = Object.fromEntries(formData.entries());
       data.status = "PENDING";
 
-      fetch("http://localhost:8080/leaveform/ins", {
+      fetch(`${CONFIG.API_BASE_URL}/leaveform/ins`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

@@ -18,9 +18,15 @@ public class HodController {
     @Autowired
     private HodRepository hodRepo;
 
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
     @PostMapping("/addhod")
     public ResponseEntity<String> addHod(@RequestBody Hod hod) {
         hod.setRole("hod"); // enforce role
+        if (hod.getPassword() != null) {
+            hod.setPassword(passwordEncoder.encode(hod.getPassword()));
+        }
         hodRepo.save(hod);
         return ResponseEntity.ok("HOD added successfully");
     }

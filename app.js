@@ -3,7 +3,7 @@ document.getElementById("leaveForm").addEventListener("submit", async (e) => {
   const form = new FormData(e.target);
   const data = Object.fromEntries(form.entries());
 
-  const res = await fetch("http://localhost:8080/api/leave", {
+  const res = await fetch(`${CONFIG.API_BASE_URL}/api/leave`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
