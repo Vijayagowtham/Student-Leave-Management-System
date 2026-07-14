@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +7,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #7daede;
 }
 
@@ -45,7 +47,7 @@ body {
 }
 
 .sidebar ul li a:hover {
-    color: #18bc9c;
+    color: #6a1b9a;
 }
 
 /* Main Content */
@@ -102,4 +104,29 @@ button {
 
 .reject:hover {
     background-color: #c0392b;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    .sidebar ul {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+    }
+
+    .sidebar ul li {
+        margin: 0 15px 0 0;
+    }
 }

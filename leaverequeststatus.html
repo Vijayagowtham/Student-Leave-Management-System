@@ -90,7 +90,7 @@
   <script>
     function search() {
       const rollNo = document.getElementById('rollNumber').value;
-      fetch(`http://localhost:8080/leaveform/search?rollNumber=${rollNo}`)
+      fetch(`${CONFIG.API_BASE_URL}/leaveform/search?rollNumber=${rollNo}`)
         .then(res => {
           if (!res.ok) throw new Error("No data found");
           return res.json();

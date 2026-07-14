@@ -2,7 +2,7 @@
 // Centralized Configuration File for API Endpoints
 
 const CONFIG = {
-    API_BASE_URL: 'http://localhost:8080'
+    API_BASE_URL: 'https://postgres-production-75be4.up.railway.app'
 };
 // Expose it globally
 window.CONFIG = CONFIG;

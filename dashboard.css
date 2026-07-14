@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 /* unified layout and responsive styles for all dashboards */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -73,7 +75,7 @@ body::before {
 
 .sidebar ul li a:hover,
 .sidebar ul li.active p {
-    background-color: #27ae60;
+    background-color: #6a1b9a;
 }
 
 /* Main Content Styling */

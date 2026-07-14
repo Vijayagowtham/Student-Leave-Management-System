@@ -86,7 +86,7 @@
         department: document.getElementById("hodDepartment").value
       };
 
-      fetch(`http://localhost:8080/hodform/updatehod/${id}`, {
+      fetch(`${CONFIG.API_BASE_URL}/hodform/updatehod/${id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

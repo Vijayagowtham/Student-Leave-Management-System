@@ -142,7 +142,7 @@
 
     // Load Tutors from same department
     async function loadTutors() {
-      const res = await fetch(`http://localhost:8080/api/tutor/by-department/${department}`);
+      const res = await fetch(`${CONFIG.API_BASE_URL}/api/tutor/by-department/${department}`);
       const tutors = await res.json();
       const tbody = document.querySelector("#tutorTable tbody");
       tbody.innerHTML = tutors.map(t => `
@@ -173,7 +173,7 @@
 
     // Accept/Reject Leave Request
     async function handleAction(id, action) {
-      await fetch(`http://localhost:8080/leaveform/upd/${id}?action=${action}`, { method: "PUT" });
+      await fetch(`${CONFIG.API_BASE_URL}/leaveform/upd/${id}?action=${action}`, { method: "PUT" });
       alert(`Leave ${action}d`);
       loadLeaves();
 

@@ -23,11 +23,11 @@ for file_path in all_files:
     original = content
     
     # 1. Replace "http://localhost:8080/" inside templates or raw fetch
-    # Using regex to target `"http://localhost:8080/` or `'http://localhost:8080/`
-    content = re.sub(r'["\']http://localhost:8080/([^"\']*)["\']', r'`${CONFIG.API_BASE_URL}/\1`', content)
+    # Using regex to target `"http://localhost:8080/` or `'http://localhost:8080/` or template literals
+    content = re.sub(r'["\'`]http://localhost:8080/([^"\'`]*)["\'`]', r'`${CONFIG.API_BASE_URL}/\1`', content)
     
     # Target pure references without trailing slash
-    content = re.sub(r'["\']http://localhost:8080["\']', r'CONFIG.API_BASE_URL', content)
+    content = re.sub(r'["\'`]http://localhost:8080["\'`]', r'CONFIG.API_BASE_URL', content)
 
     # 2. Inject config.js before closing </head> or <body> if HTML
     if file_path.endswith('.html') and script_tag not in content:
