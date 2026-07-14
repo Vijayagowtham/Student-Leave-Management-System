@@ -20,7 +20,6 @@ import com.student.demo.repository.HodRepository;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 public class StudentController {
 
     @Autowired

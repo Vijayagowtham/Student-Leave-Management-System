@@ -12,7 +12,6 @@ import com.student.demo.repository.HodRepository;
 
 @RestController
 @RequestMapping("/hodform")
-@CrossOrigin(origins = "*")
 public class HodController {
 
     @Autowired

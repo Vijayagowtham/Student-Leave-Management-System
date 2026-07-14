@@ -10,7 +10,6 @@ import com.student.demo.leave.service.LeaveRequestService;
 
 @RestController
 @RequestMapping("/leaveform")
-@CrossOrigin(origins = "*")
 public class LeaveController {
 
     @Autowired
