@@ -1,0 +1,14 @@
+{
+    "$schema": "https://railway.app/railway.schema.json",
+    "build": {
+        "builder": "DOCKERFILE",
+        "dockerfilePath": "student/Dockerfile"
+    },
+    "deploy": {
+        "startCommand": "java -jar app.jar",
+        "healthcheckPath": "/api/leaveform",
+        "healthcheckTimeout": 300,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 5
+    }
+}
