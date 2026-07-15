@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="login.css">
+  <script src="config.js"></script>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="login-container">
+    <h2>📝 Register</h2>
+    <p class="subtitle">Create an account</p>
+    <form id="registerForm">
+      <div class="input-group">
+        <input type="text" id="username" required placeholder="Email / Username" />
+      </div>
+      <div class="input-group password-group">
+        <input type="password" id="password" required placeholder="Password" />
+      </div>
+      <div class="input-group">
+        <select id="role" required>
+            <option value="" disabled selected>Select Role...</option>
+            <option value="student">Student</option>
+            <option value="tutor">Tutor</option>
+        </select>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p class="footer-text">Already have an account? <a href="login.html">Login</a></p>
+  </div>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      
+      const endpoint = role === 'student' ? '/api/students/add' : '/api/tutor/add';
+      
+      const res = await fetch(`${CONFIG.API_BASE_URL}${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, department: "CS" }) // default dept for easy setup
+      });
+      
+      if (res.ok) {
+          alert('Registration successful! Please login.');
+          window.location.href = 'login.html';
+      } else {
+          alert('Registration failed.');
+      }
+    });
+  </script>
+</body>
+</html>
